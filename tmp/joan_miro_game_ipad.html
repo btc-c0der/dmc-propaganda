@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Escola Joan Miró - Barcelona Explorer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            overflow: hidden;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: none;
+        }
+        
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 1024px;
+            max-height: 1366px;
+            background-color: #b3e0ff;
+            overflow: hidden;
+        }
+        
+        #welcome-screen, #map-screen, #quiz-screen, #result-screen, #final-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        
+        .active-screen {
+            opacity: 1 !important;
+            pointer-events: all !important;
+        }
+        
+        h1 {
+            color: #003366;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            color: #333;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        p {
+            color: #333;
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+        
+        .button {
+            padding: 15px 30px;
+            font-size: 24px;
+            border: none;
+            border-radius: 50px;
+            margin: 15px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .start-button {
+            background-color: #4CAF50;
+            width: 250px;
+            height: 60px;
+            font-size: 28px;
+        }
+        
+        .explore-button {
+            background-color: #FF9800;
+            width: 250px;
+        }
+        
+        .continue-button {
+            background-color: #2196F3;
+            width: 250px;
+        }
+        
+        .option-button {
+            background-color: #b3e0ff;
+            color: #333;
+            width: 90%;
+            max-width: 600px;
+            text-align: left;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 15px;
+            border: 2px solid #0077cc;
+        }
+        
+        .restart-button {
+            background-color: #4CAF50;
+            width: 250px;
+        }
+        
+        #map {
+            position: relative;
+            width: 90%;
+            height: 70%;
+            margin: 0 auto;
+            background-color: #e6f7ff;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #0077cc;
+        }
+        
+        .location {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        
+        .location::after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        #explorer {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+        
+        .road {
+            position: absolute;
+            background-color: #aaa;
+            z-index: 1;
+        }
+        
+        .coast {
+            position: absolute;
+            background-color: tan;
+            z-index: 1;
+            bottom: 0;
+            width: 100%;
+            height: 15%;
+        }
+        
+        .sea {
+            position: absolute;
+            background-color: #0077cc;
+            z-index: 1;
+            bottom: 0;
+            width: 100%;
+            height: 10%;
+        }
+        
+        .city {
+            position: absolute;
+            background-color: #f0f0f0;
+            z-index: 1;
+            width: 70%;
+            height: 50%;
+            border-radius: 50%;
+            top: 30%;
+            left: 15%;
+        }
+        
+        #fact-box {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-style: italic;
+            font-size: 18px;
+        }
+        
+        #score-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #003366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #question-counter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #003366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .correct {
+            color: #4CAF50;
+        }
+        
+        .incorrect {
+            color: #F44336;
+        }
+        
+        .learning-points {
+            text-align: left;
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        
+        .credits {
+            position: absolute;
+            bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Specific layout for iPad Pro */
+        @media (min-width: 834px) and (min-height: 1112px) {
+            h1 {
+                font-size: 42px;
+            }
+            
+            .button {
+                padding: 20px 40px;
+                font-size: 28px;
+            }
+            
+            p {
+                font-size: 26px;
+            }
+            
+            .location {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .location::after {
+                font-size: 14px;
+                bottom: -30px;
+            }
+            
+            #explorer {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="active-screen">
+            <h1>Escola Joan Miró - Barcelona Explorer</h1>
+            <h2>¡Una aventura educativa por Barcelona!</h2>
+            <p>Aprende sobre Barcelona, Joan Miró y la cultura catalana</p>
+            <button id="start-button" class="button start-button">Iniciar Aventura</button>
+            <div class="credits">Creado para Escola Joan Miró - Barcelona</div>
+        </div>
+        
+        <!-- Map Exploration Screen -->
+        <div id="map-screen">
+            <h1>¡Vamos a explorar Barcelona!</h1>
+            <div id="map">
+                <div class="city"></div>
+                <div class="coast"></div>
+                <div class="sea"></div>
+                
+                <!-- Main roads -->
+                <div class="road diagonal"></div>
+                <div class="road vertical-1"></div>
+                <div class="road vertical-2"></div>
+                
+                <!-- Locations -->
+                <div id="school" class="location" style="background-color: red; top: 45%; left: 48%;" data-name="Escola Joan Miró"></div>
+                <div id="park-guell" class="location" style="background-color: green; top: 30%; left: 35%;" data-name="Park Güell"></div>
+                <div id="sagrada-familia" class="location" style="background-color: orange; top: 25%; left: 52%;" data-name="Sagrada Família"></div>
+                <div id="camp-nou" class="location" style="background-color: blue; top: 55%; left: 25%;" data-name="Camp Nou"></div>
+                
+                <!-- Explorer -->
+                <div id="explorer"></div>
+            </div>
+            
+            <div id="fact-box">¿Sabías que? Joan Miró fue un famoso pintor surrealista nacido en Barcelona.</div>
+            <button id="explore-button" class="button explore-button">¡Explorar!</button>
+        </div>
+        
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <div id="question-counter">Pregunta 1/5</div>
+            <div id="score-display">Puntuación: 0</div>
+            <h1 id="question-text">¿Quién fue Joan Miró?</h1>
+            <div id="options-container">
+                <!-- Options will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Result Screen -->
+        <div id="result-screen">
+            <div id="result-icon" class="result-icon">✓</div>
+            <h1 id="result-text">¡Correcto! ¡Muy bien!</h1>
+            <p id="explanation-text"></p>
+            <p id="result-score">Puntuación actual: 0</p>
+            <button id="continue-button" class="button continue-button">Continuar</button>
+        </div>
+        
+        <!-- Final Score Screen -->
+        <div id="final-screen">
+            <h1>¡Felicidades! ¡Has completado la aventura!</h1>
+            <h2 id="final-score">Tu puntuación final: 0 / 50</h2>
+            <p>Has aprendido sobre Barcelona y la Escola Joan Miró:</p>
+            <ul>
+                <li class="learning-points">- La geografía de Barcelona</li>
+                <li class="learning-points">- Datos sobre Joan Miró</li>
+                <li class="learning-points">- Lugares emblemáticos de la ciudad</li>
+                <li class="learning-points">- La cultura catalana</li>
+            </ul>
+            <button id="restart-button" class="button restart-button">Jugar de nuevo</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game state
+            let score = 0;
+            let currentQuestion = 0;
+            const totalQuestions = 5;
+            
+            // DOM elements
+            const screens = {
+                welcome: document.getElementById('welcome-screen'),
+                map: document.getElementById('map-screen'),
+                quiz: document.getElementById('quiz-screen'),
+                result: document.getElementById('result-screen'),
+                final: document.getElementById('final-screen')
+            };
+            
+            const explorer = document.getElementById('explorer');
+            const scoreDisplay = document.getElementById('score-display');
+            const questionCounter = document.getElementById('question-counter');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const resultIcon = document.getElementById('result-icon');
+            const resultText = document.getElementById('result-text');
+            const explanationText = document.getElementById('explanation-text');
+            const resultScore = document.getElementById('result-score');
+            const finalScore = document.getElementById('final-score');
+            
+            // Questions data
+            const questions = [
+                {
+                    question: "¿Quién fue Joan Miró?",
+                    options: ["Un famoso pintor", "Un famoso futbolista", "Un famoso chef"],
+                    answer: 0
+                },
+                {
+                    question: "¿Qué famoso edificio en Barcelona fue diseñado por Antoni Gaudí?",
+                    options: ["Torre Agbar", "Sagrada Família", "Casa Batlló"],
+                    answer: 1
+                },
+                {
+                    question: "¿Qué idioma se habla en Barcelona además del español?",
+                    options: ["Portugués", "Francés", "Catalán"],
+                    answer: 2
+                },
+                {
+                    question: "¿Qué famoso futbolista del Barcelona ganó múltiples Balones de Oro?",
+                    options: ["Messi", "Xavi", "Iniesta"],
+                    answer: 0
+                },
+                {
+                    question: "¿Cuál es la famosa calle de Barcelona con muchas tiendas y restaurantes?",
+                    options: ["La Rambla", "Passeig de Gràcia", "Avinguda Diagonal"],
+                    answer: 0
+                }
+            ];
+            
+            // Locations for the map exploration
+            const locations = [
+                { id: "school", x: 48, y: 45 },
+                { id: "park-guell", x: 35, y: 30 },
+                { id: "sagrada-familia", x: 52, y: 25 },
+                { id: "camp-nou", x: 25, y: 55 }
+            ];
+            
+            // Setup road styles based on screen size
+            function setupRoadStyles() {
+                const diagonal = document.querySelector('.road.diagonal');
+                const vertical1 = document.querySelector('.road.vertical-1');
+                const vertical2 = document.querySelector('.road.vertical-2');
+                
+                diagonal.style.width = '80%';
+                diagonal.style.height = '4px';
+                diagonal.style.top = '50%';
+                diagonal.style.left = '10%';
+                
+                vertical1.style.width = '4px';
+                vertical1.style.height = '60%';
+                vertical1.style.top = '20%';
+                vertical1.style.left = '50%';
+                
+                vertical2.style.width = '4px';
+                vertical2.style.height = '60%';
+                vertical2.style.top = '20%';
+                vertical2.style.left = '60%';
+            }
+            
+            // Initialize explorer position
+            function initExplorer() {
+                const school = document.getElementById('school');
+                const schoolRect = school.getBoundingClientRect();
+                const mapRect = document.getElementById('map').getBoundingClientRect();
+                
+                explorer.style.left = locations[0].x + '%';
+                explorer.style.top = locations[0].y + '%';
+            }
+            
+            // Show screen by id and hide others
+            function showScreen(screenId) {
+                for (const key in screens) {
+                    screens[key].classList.remove('active-screen');
+                }
+                screens[screenId].classList.add('active-screen');
+            }
+            
+            // Animate explorer along path
+            function animateExplorer(path, callback) {
+                let step = 0;
+                
+                function move() {
+                    if (step < path.length) {
+                        explorer.style.left = path[step].x + '%';
+                        explorer.style.top = path[step].y + '%';
+                        step++;
+                        setTimeout(move, 50);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                move();
+            }
+            
+            // Create path between two points
+            function createPath(start, end, steps = 20) {
+                const path = [];
+                
+                for (let i = 0; i <= steps; i++) {
+                    const t = i / steps;
+                    const x = start.x + (end.x - start.x) * t;
+                    const y = start.y + (end.y - start.y) * t;
+                    path.push({x, y});
+                }
+                
+                return path;
+            }
+            
+            // Start map exploration
+            function startExploration() {
+                // Create path between all locations
+                const completePath = [];
+                
+                completePath.push(...createPath(
+                    locations[0], // School
+                    locations[1]  // Park Güell
+                ));
+                
+                completePath.push(...createPath(
+                    locations[1], // Park Güell
+                    locations[2]  // Sagrada Familia
+                ));
+                
+                completePath.push(...createPath(
+                    locations[2], // Sagrada Familia
+                    locations[3]  // Camp Nou
+                ));
+                
+                completePath.push(...createPath(
+                    locations[3], // Camp Nou
+                    locations[0]  // Back to School
+                ));
+                
+                // Start animation
+                animateExplorer(completePath, function() {
+                    // After animation is complete, show continue button
+                    document.getElementById('fact-box').textContent = "¡Genial! Has visitado los lugares más emblemáticos de Barcelona.";
+                    document.getElementById('explore-button').textContent = "Continuar al Quiz";
+                    document.getElementById('explore-button').className = "button continue-button";
+                });
+            }
+            
+            // Show current question
+            function showQuestion() {
+                if (currentQuestion >= totalQuestions) {
+                    showScreen('final');
+                    finalScore.textContent = `Tu puntuación final: ${score} / ${totalQuestions * 10}`;
+                    return;
+                }
+                
+                const question = questions[currentQuestion];
+                questionText.textContent = `${question.question}`;
+                questionCounter.textContent = `Pregunta ${currentQuestion + 1}/${totalQuestions}`;
+                scoreDisplay.textContent = `Puntuación: ${score}`;
+                
+                // Clear options
+                optionsContainer.innerHTML = '';
+                
+                // Add option buttons
+                question.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'button option-button';
+                    button.textContent = `${index + 1}. ${option}`;
+                    button.onclick = () => checkAnswer(index);
+                    optionsContainer.appendChild(button);
+                });
+                
+                showScreen('quiz');
+            }
+            
+            // Check answer and show result
+            function checkAnswer(selectedIndex) {
+                const question = questions[currentQuestion];
+                const correct = selectedIndex === question.answer;
+                
+                if (correct) {
+                    score += 10;
+                    resultIcon.textContent = "✓";
+                    resultIcon.className = "result-icon correct";
+                    resultText.textContent = "¡Correcto! ¡Muy bien!";
+                    explanationText.textContent = "";
+                } else {
+                    resultIcon.textContent = "✗";
+                    resultIcon.className = "result-icon incorrect";
+                    resultText.textContent = "¡No es correcto!";
+                    explanationText.textContent = `La respuesta correcta era: ${question.options[question.answer]}`;
+                }
+                
+                resultScore.textContent = `Puntuación actual: ${score}`;
+                showScreen('result');
+            }
+            
+            // Continue to next question
+            function continueToNextQuestion() {
+                currentQuestion++;
+                showQuestion();
+            }
+            
+            // Reset game
+            function resetGame() {
+                score = 0;
+                currentQuestion = 0;
+                showScreen('welcome');
+            }
+            
+            // Button event listeners
+            document.getElementById('start-button').addEventListener('click', function() {
+                showScreen('map');
+                setupRoadStyles();
+                initExplorer();
+            });
+            
+            document.getElementById('explore-button').addEventListener('click', function() {
+                if (this.textContent === "¡Explorar!") {
+                    startExploration();
+                } else {
+                    // Continue to quiz
+                    showQuestion();
+                }
+            });
+            
+            document.getElementById('continue-button').addEventListener('click', continueToNextQuestion);
+            document.getElementById('restart-button').addEventListener('click', resetGame);
+            
+            // Initialize road styles
+            setupRoadStyles();
+        });
+    </script>
+</body>
+</html>
