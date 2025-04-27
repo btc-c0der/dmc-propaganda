@@ -1,15 +1,15 @@
-# DMC Propaganda - G;RADIO Framework Implementation
+# DMC Propaganda - Marketing Campaign Management System
 
-A professional-grade web application for DMC Propaganda from Campinas SP, Brasil using the G;RADIO framework with micro modules architecture and test-driven development.
+A professional-grade web application for DMC Propaganda from Campinas SP, Brasil using FastAPI and Gradio with a modular architecture and MongoDB database.
 
 ## Project Overview
 
 This project provides a comprehensive marketing campaign management system for DMC Propaganda, implementing:
 
-- Micro-modules architecture for scalable code organization
-- Test-driven development approach
-- RESTful API design patterns
-- JWT-based authentication & authorization
+- FastAPI backend with MongoDB database
+- Gradio web interface for intuitive user experience
+- Advanced marketing analytics models in Python
+- RESTful API with JWT authentication & authorization
 - Comprehensive client and campaign management
 - Educational tools for children through the Kids Bless initiative
 
@@ -23,47 +23,38 @@ We've prepared comprehensive documentation to help you navigate the project:
 
 ## Technologies Used
 
-- Node.js & Express.js
-- TypeScript
-- MongoDB with Mongoose ODM
-- JWT for authentication
-- Jest for testing
-- G;RADIO architectural patterns
-- Python for educational tools
+- **Backend**: FastAPI, MongoDB (with Beanie ODM)
+- **Frontend**: Gradio
+- **Authentication**: JWT, OAuth2
+- **Analytics**: Python data science ecosystem (Pandas, NumPy, PyMC)
+- **API Documentation**: FastAPI Swagger/OpenAPI
 
 ## Project Structure
 
-The project follows a micro-modules architecture, with each domain having its own encapsulated functionality:
+The project follows a modular architecture:
 
 ```
 src/
-├── config/         # Configuration settings
-├── core/           # Core framework utilities
-├── interfaces/     # TypeScript interfaces and types
-├── middleware/     # Express middleware
-├── modules/        # Feature modules
-│   ├── auth/       # Authentication & user management
-│   ├── client/     # Client management
-│   ├── campaign/   # Campaign management
-│   ├── media/      # Media asset management
-│   └── analytics/  # Analytics & reporting
-├── tests/          # Test suites
-└── utils/          # Utility functions
-tmp/                # Educational tools for Kids Bless initiative
+├── fastapi/           # FastAPI backend
+│   ├── main.py        # Main FastAPI application
+│   ├── auth/          # Authentication module 
+│   ├── clients/       # Client management module
+│   ├── campaigns/     # Campaign management module
+│   ├── analytics/     # Analytics module
+│   └── config/        # Configuration
+│
+├── gradio/            # Gradio frontend
+│   ├── app.py         # Main Gradio application
+│   ├── server.py      # Server startup script
+│   └── marketing_models/ # Advanced analytics models
 ```
-
-Each module follows a consistent structure:
-- `controllers/` - Handle HTTP requests
-- `models/` - Data models
-- `services/` - Business logic
-- `routes/` - API endpoints
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v16+)
-- MongoDB (v4+)
+- Python 3.10+
+- MongoDB 4.0+
 
 ### Installation
 
@@ -73,31 +64,20 @@ git clone https://github.com/your-organization/dmc-propaganda.git
 cd dmc-propaganda
 ```
 
-2. Install dependencies
+2. Run the start script
 ```bash
-npm install
+python start.py
 ```
 
-3. Create a `.env` file in the root directory with the following variables:
-```
-NODE_ENV=development
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/dmc-propaganda
-JWT_SECRET=your_jwt_secret_key_here
-JWT_EXPIRATION=7d
-CORS_ORIGIN=*
-```
+This will:
+- Install all required dependencies
+- Initialize the database connection
+- Start the FastAPI backend and Gradio frontend
 
-4. Start the development server
-```bash
-npm run dev
-```
-
-### Running Tests
-
-```bash
-npm test
-```
+3. Access the application
+   - Gradio interface: http://localhost:7860
+   - FastAPI backend: http://localhost:3000
+   - API documentation: http://localhost:3000/docs
 
 ## Key Features
 
@@ -113,6 +93,12 @@ npm test
 - Password encryption
 - Session management
 
+### Advanced Marketing Analytics
+- Media mix modeling
+- Customer lifetime value analysis
+- Customer segmentation
+- Performance reporting
+
 ### Educational Components
 - Interactive geography games for children
 - Cultural exchange educational tools
@@ -120,13 +106,14 @@ npm test
 
 ## API Endpoints
 
-Refer to our [How-To Guide](HOW-TO-GUIDE.md) for a complete list of API endpoints and their usage.
+The FastAPI backend provides a comprehensive set of endpoints:
 
-## Kids Bless Initiative
+- **/api/auth** - Authentication (register, login, profile)
+- **/api/clients** - Client management (CRUD operations)
+- **/api/campaigns** - Campaign management (CRUD operations, team management, metrics)
+- **/api/analytics** - Analytics endpoints (campaign metrics, summary statistics)
 
-![Kids Bless](docs/images/kids_bless_logo.png) <!-- Add this image if available -->
-
-The Kids Bless initiative is our educational arm, creating interactive tools to help children learn about geography, culture, and international connections. See [KIDS-BLESS.md](KIDS-BLESS.md) for more information.
+Full API documentation is available at http://localhost:3000/docs when the server is running.
 
 ## Contributing
 
@@ -134,8 +121,8 @@ We welcome contributions! Please read our [Contribution Guidelines](CONTRIBUTE.m
 
 ## License
 
-This project is licensed under the ISC License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## About DMC Propaganda
 
-DMC Propaganda is a marketing agency based in Campinas SP, Brasil. Visit their official website at [https://www.dmcpropaganda.com.br/](https://www.dmcpropaganda.com.br/)
+DMC Propaganda is a marketing agency based in Campinas, São Paulo, Brazil, specializing in integrated marketing campaigns, digital strategy, and educational outreach through the Kids Bless initiative.

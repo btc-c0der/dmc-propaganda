@@ -12,7 +12,7 @@ API_URL = os.environ.get("API_URL", "http://localhost:3000/api")
 def check_api_health():
     """Check if the API is available"""
     try:
-        response = requests.get(f"{API_URL}/health", timeout=2)
+        response = requests.get(f"{API_URL}", timeout=2)
         if response.status_code == 200:
             return True, "API is available"
         else:
@@ -21,22 +21,26 @@ def check_api_health():
         return False, f"API is not available: {str(e)}"
 
 def login(username, password):
-    """Login function that connects to the existing backend"""
+    """Login function that connects to the FastAPI backend"""
     try:
         # Check API health first
         api_available, message = check_api_health()
         if not api_available:
             return message, ""
             
-        response = requests.post(f"{API_URL}/auth/login", json={
-            "email": username,
+        response = requests.post(f"{API_URL}/auth/login", data={
+            "username": username,  # FastAPI OAuth2 expects username field
             "password": password
         })
+        
         if response.status_code == 200:
             data = response.json()
-            return f"Login successful! Welcome {data.get('user', {}).get('name', 'User')}", data.get('token', '')
+            user_data = data.get('data', {}).get('user', {})
+            token = data.get('data', {}).get('token', '')
+            return f"Login successful! Welcome {user_data.get('name', 'User')}", token
         else:
-            return f"Login failed: {response.json().get('message', 'Unknown error')}", ""
+            error_msg = response.json().get('detail', response.json().get('message', 'Unknown error'))
+            return f"Login failed: {error_msg}", ""
     except Exception as e:
         return f"Error: {str(e)}", ""
 
@@ -50,10 +54,12 @@ def get_clients(token):
         response = requests.get(f"{API_URL}/clients", headers=headers)
         
         if response.status_code == 200:
-            clients = response.json()
+            response_data = response.json()
+            clients = response_data.get('data', [])
             return "Clients retrieved successfully", clients
         else:
-            return f"Failed to retrieve clients: {response.json().get('message', 'Unknown error')}", []
+            error_msg = response.json().get('detail', response.json().get('message', 'Unknown error'))
+            return f"Failed to retrieve clients: {error_msg}", []
     except Exception as e:
         return f"Error: {str(e)}", []
 
@@ -66,15 +72,18 @@ def get_campaigns(token, client_id=None):
         headers = {"Authorization": f"Bearer {token}"}
         url = f"{API_URL}/campaigns"
         if client_id:
-            url = f"{url}?clientId={client_id}"
+            # For FastAPI endpoint which expects client_id in path
+            url = f"{API_URL}/campaigns/client/{client_id}"
             
         response = requests.get(url, headers=headers)
         
         if response.status_code == 200:
-            campaigns = response.json()
+            response_data = response.json()
+            campaigns = response_data.get('data', [])
             return "Campaigns retrieved successfully", campaigns
         else:
-            return f"Failed to retrieve campaigns: {response.json().get('message', 'Unknown error')}", []
+            error_msg = response.json().get('detail', response.json().get('message', 'Unknown error'))
+            return f"Failed to retrieve campaigns: {error_msg}", []
     except Exception as e:
         return f"Error: {str(e)}", []
 
@@ -87,15 +96,18 @@ def get_analytics(token, campaign_id=None):
         headers = {"Authorization": f"Bearer {token}"}
         url = f"{API_URL}/analytics"
         if campaign_id:
-            url = f"{url}?campaignId={campaign_id}"
+            # FastAPI uses query parameter for campaign_id
+            url = f"{url}?campaign_id={campaign_id}"
             
         response = requests.get(url, headers=headers)
         
         if response.status_code == 200:
-            analytics = response.json()
+            response_data = response.json()
+            analytics = response_data.get('data', [])
             return "Analytics retrieved successfully", analytics
         else:
-            return f"Failed to retrieve analytics: {response.json().get('message', 'Unknown error')}", []
+            error_msg = response.json().get('detail', response.json().get('message', 'Unknown error'))
+            return f"Failed to retrieve analytics: {error_msg}", []
     except Exception as e:
         return f"Error: {str(e)}", []
 

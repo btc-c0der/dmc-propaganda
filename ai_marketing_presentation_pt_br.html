@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estratégias Baseadas em IA para Sucesso em Marketing Brasileiro</title>
+    <style>
+        :root {
+            --primary: #00a1e0;
+            --secondary: #f47c00;
+            --tertiary: #7ac142;
+            --dark: #333333;
+            --light: #f5f5f5;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #222;
+            color: var(--dark);
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        .presentation {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .slide {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 50px;
+            overflow: hidden;
+            position: relative;
+            min-height: 600px;
+            padding: 40px;
+        }
+        
+        .title-slide {
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px;
+        }
+        
+        .slide-header {
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+        
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        h3 {
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .slide p {
+            font-size: 20px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .company {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .date {
+            font-size: 18px;
+            margin-top: 40px;
+        }
+        
+        .columns {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            font-size: 20px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .stat-box {
+            background: var(--light);
+            border-left: 5px solid var(--primary);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 18px;
+        }
+        
+        .chart {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bar-label {
+            width: 150px;
+            text-align: right;
+            font-size: 16px;
+        }
+        
+        .bar-container {
+            flex: 1;
+            height: 25px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .bar {
+            height: 100%;
+            background: var(--gradient);
+        }
+        
+        .bar-value {
+            width: 50px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 18px;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        .highlight {
+            background-color: rgba(122, 193, 66, 0.2);
+            padding: 3px 5px;
+            border-radius: 3px;
+        }
+        
+        .roadmap {
+            display: flex;
+            margin: 30px 0;
+        }
+        
+        .roadmap-item {
+            flex: 1;
+            padding: 15px;
+            border-top: 4px solid var(--primary);
+            background-color: var(--light);
+            margin-right: 10px;
+            position: relative;
+        }
+        
+        .roadmap-item:after {
+            content: "→";
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        .roadmap-item:last-child:after {
+            content: "";
+        }
+        
+        .case-study {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .case-study h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--tertiary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-image: conic-gradient(
+                var(--primary) 0% 52%,
+                var(--secondary) 52% 75%,
+                var(--tertiary) 75% 87%,
+                #8a56ac 87% 100%
+            );
+            margin: 20px auto;
+        }
+        
+        .pie-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background: var(--light);
+            border-left: 5px solid var(--secondary);
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        
+        .conclusion {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .conclusion h2, .conclusion h3 {
+            color: white;
+            border-color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .columns {
+                flex-direction: column;
+            }
+            
+            .slide {
+                padding: 20px;
+                min-height: auto;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
+            
+            h2 {
+                font-size: 28px;
+            }
+            
+            .roadmap {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .roadmap-item:after {
+                content: "↓";
+                right: 50%;
+                top: auto;
+                bottom: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide">
+            <h1>Estratégias Baseadas em IA para Sucesso em Marketing Brasileiro</h1>
+            <p class="company">DMC Propaganda</p>
+            <p>Utilizando Inteligência Artificial para Excelência em Marketing Ético</p>
+            <p class="date">Abril 2025</p>
+        </div>
+        
+        <!-- Slide 2: Introduction -->
+        <div class="slide">
+            <h2 class="slide-header">Por que IA para Marketing no Brasil?</h2>
+            <div class="columns">
+                <div class="column">
+                    <div class="stat-box">
+                        <div class="stat-value">150M+</div>
+                        <div class="stat-label">Usuários de Internet</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">140M+</div>
+                        <div class="stat-label">Usuários de Redes Sociais</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">32%</div>
+                        <div class="stat-label">das Agências Utilizam IA Efetivamente</div>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Vantagens Competitivas</h3>
+                    <ul>
+                        <li>Navegar pelas <span class="highlight">diferenças regionais</span> do diversificado mercado brasileiro</li>
+                        <li>Criar <span class="highlight">campanhas hiperpersonalizadas</span> em larga escala</li>
+                        <li>Otimizar performance de campanhas através de <span class="highlight">análises preditivas</span></li>
+                        <li>Aumentar eficiência e <span class="highlight">reduzir custos</span> enquanto melhora resultados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Strategy 1 - Segmentation -->
+        <div class="slide">
+            <h2 class="slide-header">Estratégia 1: Segmentação Avançada de Clientes</h2>
+            <h3>De Dados Demográficos Amplos para Micro-Segmentação</h3>
+            <div class="columns">
+                <div class="column">
+                    <p>Algoritmos de aprendizado de máquina podem identificar padrões em:</p>
+                    <ul>
+                        <li>Preferências regionais nas cinco grandes regiões do Brasil</li>
+                        <li>Padrões comportamentais exclusivos dos consumidores brasileiros</li>
+                        <li>Valores culturais e identidades sociais</li>
+                        <li>Preferências de plataformas digitais por segmento demográfico</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <div class="chart">
+                        <h3>Precisão de Segmentação</h3>
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <div class="bar-label">Tradicional</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 45%;"></div>
+                                </div>
+                                <div class="bar-value">45%</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label">IA Básica</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 75%;"></div>
+                                </div>
+                                <div class="bar-value">75%</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label">IA Avançada</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 92%;"></div>
+                                </div>
+                                <div class="bar-value">92%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Strategy 2 - Predictive Analytics -->
+        <div class="slide">
+            <h2 class="slide-header">Estratégia 2: Análise Preditiva para Otimização de Campanhas</h2>
+            <div class="columns">
+                <div class="column">
+                    <h3>Mix de Mídia Otimizado por IA</h3>
+                    <table>
+                        <tr>
+                            <th>Canal</th>
+                            <th>Tradicional</th>
+                            <th>Otimizado por IA</th>
+                            <th>Aumento de Performance</th>
+                        </tr>
+                        <tr>
+                            <td>Digital</td>
+                            <td>45%</td>
+                            <td>52%</td>
+                            <td>+22% ROI</td>
+                        </tr>
+                        <tr>
+                            <td>TV</td>
+                            <td>30%</td>
+                            <td>23%</td>
+                            <td>+5% Eficiência</td>
+                        </tr>
+                        <tr>
+                            <td>OOH</td>
+                            <td>15%</td>
+                            <td>12%</td>
+                            <td>+8% Alcance</td>
+                        </tr>
+                        <tr>
+                            <td>Rádio</td>
+                            <td>10%</td>
+                            <td>13%</td>
+                            <td>+18% Engajamento</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="column">
+                    <h3>Aplicações Principais</h3>
+                    <ul>
+                        <li><strong>Testes Pré-lançamento:</strong> Prever performance antes do lançamento completo</li>
+                        <li><strong>Otimização de Orçamento:</strong> Alocação orientada por dados entre canais</li>
+                        <li><strong>Previsão de Tendências Brasileiras:</strong> Identificação de preferências emergentes dos consumidores</li>
+                        <li><strong>Retenção de Clientes:</strong> Identificação antecipada de contas em risco</li>
+                    </ul>
+                    <div class="chart">
+                        <div class="pie-chart"></div>
+                        <div class="pie-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: var(--primary);"></div>
+                                <span>Digital (52%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: var(--secondary);"></div>
+                                <span>TV (23%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: var(--tertiary);"></div>
+                                <span>OOH (12%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: #8a56ac;"></div>
+                                <span>Rádio (13%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Strategy 3 - Content Generation -->
+        <div class="slide">
+            <h2 class="slide-header">Estratégia 3: Geração de Conteúdo para Audiências Brasileiras</h2>
+            <h3>Conteúdo de IA com Consciência Cultural</h3>
+            <div class="columns">
+                <div class="column">
+                    <p>Aplicações principais para o mercado brasileiro:</p>
+                    <ul>
+                        <li>Redação em português com sensibilidade aos dialetos regionais</li>
+                        <li>Integração de referências culturais para mensagens autênticas</li>
+                        <li>Conteúdo visual adaptado às preferências estéticas brasileiras</li>
+                        <li>Conteúdo de áudio otimizado para o português brasileiro</li>
+                    </ul>
+                    <div class="chart">
+                        <h3>Capacidade de Produção de Conteúdo</h3>
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <div class="bar-label">Tradicional</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 25%;"></div>
+                                </div>
+                                <div class="bar-value">100</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label">Com IA</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 100%;"></div>
+                                </div>
+                                <div class="bar-value">400</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Processo Ético de Conteúdo com IA</h3>
+                    <div class="roadmap">
+                        <div class="roadmap-item">
+                            <strong>Briefing Humano</strong><br>
+                            Contexto cultural
+                        </div>
+                        <div class="roadmap-item">
+                            <strong>Geração por IA</strong><br>
+                            Conteúdo inicial
+                        </div>
+                        <div class="roadmap-item">
+                            <strong>Revisão Humana</strong><br>
+                            Aprimoramento
+                        </div>
+                        <div class="roadmap-item">
+                            <strong>Otimização</strong><br>
+                            Baseada em dados
+                        </div>
+                    </div>
+                    <div class="quote">
+                        "O conteúdo de IA mais eficaz para mercados brasileiros mantém supervisão humana enquanto aproveita a inteligência cultural."
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Case Studies -->
+        <div class="slide">
+            <h2 class="slide-header">Estudos de Caso do Mercado Brasileiro</h2>
+            <div class="case-study">
+                <h3>Personalização Regional para Grande Varejista</h3>
+                <div class="tags">
+                    <span class="tag">Segmentação de Clientes</span>
+                    <span class="tag">Marketing Regional</span>
+                </div>
+                <p><strong>Desafio:</strong> Preferências diversas entre as regiões do Brasil</p>
+                <p><strong>Solução:</strong> Segmentação baseada em aprendizado de máquina com adaptação regional de conteúdo</p>
+                <p><strong>Resultados:</strong></p>
+                <ul>
+                    <li>Aumento de 34% no engajamento no Nordeste</li>
+                    <li>Conversão 28% maior na região Sul</li>
+                    <li>Retenção 42% melhor na região Norte</li>
+                </ul>
+            </div>
+            
+            <div class="case-study">
+                <h3>Alocação Preditiva de Orçamento para Marca FMCG</h3>
+                <div class="tags">
+                    <span class="tag">Otimização de Mídia</span>
+                    <span class="tag">Análise Preditiva</span>
+                </div>
+                <p><strong>Desafio:</strong> Orçamento limitado com pressão para melhorar ROAS</p>
+                <p><strong>Solução:</strong> Análise preditiva para otimização entre canais</p>
+                <p><strong>Resultados:</strong> Aumento de 27% no ROAS, redução de 18% nos custos de aquisição, realocação de 35% do orçamento para canais de maior desempenho</p>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Ethical Framework -->
+        <div class="slide">
+            <h2 class="slide-header">Implementação Ética de IA</h2>
+            <div class="columns">
+                <div class="column">
+                    <h3>Princípios Fundamentais para DMC Propaganda</h3>
+                    <ul>
+                        <li><strong>Transparência:</strong> Divulgar o uso de IA para clientes e consumidores</li>
+                        <li><strong>Privacidade de Dados:</strong> Conformidade com LGPD (Lei Geral de Proteção de Dados)</li>
+                        <li><strong>Supervisão Humana:</strong> Manter processos de revisão para saídas de IA</li>
+                        <li><strong>Prevenção de Viés:</strong> Auditorias regulares de algoritmos considerando a diversa população brasileira</li>
+                        <li><strong>Alinhamento de Valores:</strong> Aplicações de IA alinhadas com valores do cliente e culturais</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <div class="chart">
+                        <h3>Processo de Implementação</h3>
+                        <ol>
+                            <li>Proposta de Iniciativa de IA</li>
+                            <li>Avaliação pelo Painel de Revisão Ética</li>
+                            <li>Verificações de Privacidade de Dados e Viés</li>
+                            <li>Implementação com Monitoramento</li>
+                            <li>Auditorias Éticas Regulares</li>
+                        </ol>
+                    </div>
+                    <div class="quote">
+                        "IA ética não é apenas sobre conformidade—é sobre construir confiança com consumidores brasileiros que cada vez mais valorizam marcas que respeitam sua privacidade e identidade cultural."
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: ROI & Investment -->
+        <div class="slide">
+            <h2 class="slide-header">ROI e Requisitos de Investimento</h2>
+            <div class="columns">
+                <div class="column">
+                    <h3>Investimento (em R$)</h3>
+                    <table>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Inicial</th>
+                            <th>Mensal</th>
+                        </tr>
+                        <tr>
+                            <td>Software e Ferramentas de IA</td>
+                            <td>180-350k</td>
+                            <td>15-30k</td>
+                        </tr>
+                        <tr>
+                            <td>Treinamento de Equipe</td>
+                            <td>50-120k</td>
+                            <td>5-15k</td>
+                        </tr>
+                        <tr>
+                            <td>Infraestrutura de Dados</td>
+                            <td>100-250k</td>
+                            <td>8-20k</td>
+                        </tr>
+                        <tr>
+                            <td>Consultoria</td>
+                            <td>75-200k</td>
+                            <td>0-50k</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><strong>405-920k</strong></td>
+                            <td><strong>28-115k</strong></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="column">
+                    <h3>Retornos Esperados</h3>
+                    <div class="chart">
+                        <h3>Impacto na Receita por Ano</h3>
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <div class="bar-label">Ano 1</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 18%;"></div>
+                                </div>
+                                <div class="bar-value">+18%</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label">Ano 2</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 30%;"></div>
+                                </div>
+                                <div class="bar-value">+30%</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label">Ano 3</div>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 40%;"></div>
+                                </div>
+                                <div class="bar-value">+40%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>Ponto de equilíbrio:</strong> 14-18 meses</p>
+                    <p><strong>Observação:</strong> ROI varia com base na qualidade da implementação e adoção organizacional</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Implementation Roadmap -->
+        <div class="slide">
+            <h2 class="slide-header">Roteiro de Implementação</h2>
+            <div class="roadmap" style="margin-bottom: 40px;">
+                <div class="roadmap-item">
+                    <strong>Fase 1</strong><br>
+                    Fundação<br>
+                    (Meses 1-3)
+                </div>
+                <div class="roadmap-item">
+                    <strong>Fase 2</strong><br>
+                    Piloto<br>
+                    (Meses 4-6)
+                </div>
+                <div class="roadmap-item">
+                    <strong>Fase 3</strong><br>
+                    Escala<br>
+                    (Meses 7-12)
+                </div>
+                <div class="roadmap-item">
+                    <strong>Fase 4</strong><br>
+                    Inovação<br>
+                    (Meses 13+)
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column">
+                    <h3>Fase 1: Fundação</h3>
+                    <ul>
+                        <li>Avaliação de prontidão para IA</li>
+                        <li>Configuração da infraestrutura de dados</li>
+                        <li>Treinamento de equipe e desenvolvimento de capacidades</li>
+                        <li>Identificação de casos de uso iniciais</li>
+                        <li>Desenvolvimento de estrutura ética</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Fase 2: Implementação Piloto</h3>
+                    <ul>
+                        <li>Implantar ferramentas de IA para 2-3 casos de uso selecionados</li>
+                        <li>Estabelecer estruturas de medição</li>
+                        <li>Educação e integração de clientes</li>
+                        <li>Coleta de feedback</li>
+                        <li>Refinamento de processos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Future Trends -->
+        <div class="slide">
+            <h2 class="slide-header">Tendências Futuras de Marketing com IA para o Brasil</h2>
+            <div class="columns">
+                <div class="column">
+                    <h3>Tecnologias Emergentes</h3>
+                    <ul>
+                        <li><strong>Hiperpersonalização</strong>
+                            <ul>
+                                <li>Personalização de conteúdo em nível individual</li>
+                                <li>Adaptação em tempo real baseada no contexto</li>
+                            </ul>
+                        </li>
+                        <li><strong>Experiências Imersivas</strong>
+                            <ul>
+                                <li>Conteúdo AR/VR gerado por IA</li>
+                                <li>Embaixadores virtuais de marca</li>
+                            </ul>
+                        </li>
+                        <li><strong>Busca por Voz e Visual</strong>
+                            <ul>
+                                <li>Otimização de busca por voz em português brasileiro</li>
+                                <li>Descoberta de conteúdo visual</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3>Evolução de Privacidade e Ética</h3>
+                    <ul>
+                        <li><strong>IA de Borda para Privacidade</strong>
+                            <ul>
+                                <li>Personalização no dispositivo</li>
+                                <li>Análises que preservam a privacidade</li>
+                            </ul>
+                        </li>
+                        <li><strong>Transparência Aprimorada</strong>
+                            <ul>
+                                <li>Padrões de divulgação de IA</li>
+                                <li>Explicabilidade de algoritmos</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="quote">
+                        "O futuro do marketing com IA no Brasil equilibrará tecnologia de ponta com fortes princípios éticos, criando valor enquanto respeita identidades culturais."
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Conclusion -->
+        <div class="slide conclusion">
+            <h2 class="slide-header">Próximos Passos para DMC Propaganda</h2>
+            <div class="columns">
+                <div class="column">
+                    <ol>
+                        <li><strong>Realizar avaliação de prontidão para IA</strong>
+                            <p>Avaliar capacidades atuais e infraestrutura</p>
+                        </li>
+                        <li><strong>Identificar casos de uso de alto impacto</strong>
+                            <p>Começar com vitórias rápidas para demonstrar valor</p>
+                        </li>
+                        <li><strong>Desenvolver estrutura ética de IA</strong>
+                            <p>Criar diretrizes específicas para os valores da empresa</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="column">
+                    <ol start="4">
+                        <li><strong>Iniciar programas de treinamento de equipe</strong>
+                            <p>Construir capacidades internas para implementação</p>
+                        </li>
+                        <li><strong>Engajar-se com parceiros tecnológicos</strong>
+                            <p>Identificar fornecedores e consultores para suporte</p>
+                        </li>
+                    </ol>
+                    <div class="quote">
+                        "Ao adotar IA estrategicamente, a DMC Propaganda pode se tornar líder em marketing ético e eficaz que respeita e celebra o singular panorama cultural brasileiro."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

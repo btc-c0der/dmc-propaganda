@@ -5,12 +5,12 @@ import time
 import signal
 import atexit
 
-def start_nodejs_server():
-    """Start the Node.js backend server"""
-    print("Starting Node.js backend server...")
-    node_process = subprocess.Popen(
-        ["npm", "run", "dev"],
-        cwd="/workspaces/dmc-propaganda",
+def start_fastapi_server():
+    """Start the FastAPI backend server"""
+    print("Starting FastAPI backend server...")
+    fastapi_process = subprocess.Popen(
+        ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3000", "--reload"],
+        cwd="/workspaces/dmc-propaganda/src/fastapi",
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True
@@ -20,16 +20,16 @@ def start_nodejs_server():
     time.sleep(2)
     
     # Check if the process is still running
-    if node_process.poll() is None:
-        print("Node.js server started successfully!")
+    if fastapi_process.poll() is None:
+        print("FastAPI server started successfully!")
     else:
-        stdout, stderr = node_process.communicate()
-        print("Failed to start Node.js server!")
+        stdout, stderr = fastapi_process.communicate()
+        print("Failed to start FastAPI server!")
         print(f"STDOUT: {stdout}")
         print(f"STDERR: {stderr}")
         sys.exit(1)
     
-    return node_process
+    return fastapi_process
 
 def start_gradio_server():
     """Start the Gradio server"""
@@ -39,19 +39,19 @@ def start_gradio_server():
     # Launch Gradio app
     demo.launch(server_name="0.0.0.0", server_port=7860, share=True)
 
-def cleanup(node_process):
-    """Cleanup function to kill Node.js server when exiting"""
-    if node_process and node_process.poll() is None:
-        print("Shutting down Node.js server...")
-        node_process.send_signal(signal.SIGTERM)
-        node_process.wait(timeout=5)  # Wait up to 5 seconds for graceful shutdown
+def cleanup(fastapi_process):
+    """Cleanup function to kill FastAPI server when exiting"""
+    if fastapi_process and fastapi_process.poll() is None:
+        print("Shutting down FastAPI server...")
+        fastapi_process.send_signal(signal.SIGTERM)
+        fastapi_process.wait(timeout=5)  # Wait up to 5 seconds for graceful shutdown
 
 if __name__ == "__main__":
-    # Start Node.js backend first
-    node_process = start_nodejs_server()
+    # Start FastAPI backend first
+    fastapi_process = start_fastapi_server()
     
     # Register cleanup function
-    atexit.register(cleanup, node_process)
+    atexit.register(cleanup, fastapi_process)
     
     # Then start Gradio
     start_gradio_server()
